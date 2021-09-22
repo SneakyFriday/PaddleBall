@@ -19,9 +19,11 @@ public class GameManager : MonoBehaviour
     public GameObject startMenu;
     public SoundManager soundManager;
     public ChangeMusic changeMusic;
+    public DialogueManager dialogueManager;
     public Animator musicAnim;
     public GameObject pressDMenu;
     public GameObject backgroundMusic;
+    public AiTalk aitalk;
     private readonly float[] _difficulties = {0.051f, 0.055f, 0.065f, 0.070f};
     private static float _currentDifficulty = 0.051f;
     private static readonly int FadeOut = Animator.StringToHash("fadeOut");
@@ -112,13 +114,17 @@ public class GameManager : MonoBehaviour
         if (ballController is { } && ballController.playerHit)
         {
             _playerScore++;
+            // Displays the current Player Score
             playerText.text = _playerScore.ToString();
+            // Starts AI Dialogue
+            aitalk.ShowDialogue();
             ballController.playerHit = false;
         }
 
         if (ballController is { } && ballController.AIHit)
         {
             _aiScore++;
+            // Displays the current AI Score
             aiText.text = _aiScore.ToString();
             ballController.AIHit = false;
         }
@@ -163,6 +169,11 @@ public class GameManager : MonoBehaviour
         {
             pauseMenu.SetActive(true);
             Time.timeScale = 0;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            dialogueManager.DisplayNextSentence();
         }
     }
 }
