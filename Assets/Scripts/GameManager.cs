@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     public GameObject pressDMenu;
     public GameObject backgroundMusic;
     public AiTalk aitalk;
+    public PowerUpSpawner powerUpSpawner;
     private readonly float[] _difficulties = {0.051f, 0.055f, 0.065f, 0.070f};
     private static float _currentDifficulty = 0.051f;
     private static readonly int FadeOut = Animator.StringToHash("fadeOut");
@@ -39,6 +40,7 @@ public class GameManager : MonoBehaviour
         if (ballController.ballUnterwegs)
         {
             pressDMenu.SetActive(false);
+            StartCoroutine(SpawnPowerUps());
         }
         
     }
@@ -175,5 +177,12 @@ public class GameManager : MonoBehaviour
         {
             dialogueManager.DisplayNextSentence();
         }
+    }
+
+    IEnumerator SpawnPowerUps()
+    {
+        // Instantiate Image of Powerup on Random Position in the Gamefield
+        yield return new WaitForSeconds(4);
+
     }
 }
